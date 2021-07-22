@@ -1,0 +1,47 @@
+{
+  "name": "mreggthepet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MirrorShih/MrEggThePet.git"
+  },
+  "author": "Mirror",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MirrorShih/MrEggThePet/issues"
+  },
+  "homepage": "https://github.com/MirrorShih/MrEggThePet#readme",
+  "build": {
+    "publish": "github",
+    "dmg": {
+      "contents": [
+        {
+          "x": 110,
+          "y": 150
+        },
+        {
+          "x": 240,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "appImage": {
+      "license": "LICENSE"
+    },
+    "nsis": {
+      "createDesktopShortcut": "always",
+      "license": "LICENSE"
+    }
+  },
+  "devDependencies": {
+    "electron": "^13.1.7",
+    "electron-builder": "^22.11.7"
+  }
+}
