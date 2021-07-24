@@ -1,7 +1,8 @@
 const { app, BrowserWindow, Tray, Menu } = require('electron');
 const path = require('path');
+const fs=require('fs/promises');
 
-var tray = null
+let tray = null;
 
 function createWindow() {
     const mainWindow = new BrowserWindow({
@@ -18,33 +19,30 @@ function createWindow() {
     mainWindow.loadFile('index.html');
     mainWindow.setAlwaysOnTop(true, 'floating')
     mainWindow.setSkipTaskbar(true)
+    mainWindow.setResizable(false)
     return mainWindow;
 }
 
 
-function createTray(win) {
+async function createTray(win) {
 
-    const switchMrEgg = (eggNo) => () => {
+    const switchMrEgg = (egg) => () => {
         win.show();
-        win.webContents.send('switch-mregg', eggNo);
+        win.webContents.send('switch-mregg', egg);
     }
     const iconPath = path.join(__dirname, './imgs/tray.png');
-    tray = Tray(iconPath)
-    const contextMenu = Menu.buildFromTemplate([
-        { label: 'Egg 0', click: switchMrEgg(1) },
-        { label: 'Egg Walk', click: switchMrEgg(2) },
-        {
-            label: 'Hide',
-            click: () => win.hide()
-        },
-        {
-            label: 'Close',
-            click: () => {
-                app.isQuiting = true;
-                app.quit();
-            }
+    tray = Tray(iconPath);
+    let trayMenu = [];
+
+    const files=await fs.readdir('./imgs/')
+    files.forEach(file => {
+        if(file !== "tray.png") {
+            trayMenu.push({label: file.split('.')[0], click: switchMrEgg(file.split('.')[0])})
         }
-    ])
+    })
+    trayMenu.push({label: 'Hide', click: () => win.hide()});
+    trayMenu.push({label: 'Exit', click: () => app.quit()});
+    const contextMenu = Menu.buildFromTemplate(trayMenu);
     tray.setToolTip("MrEggThePet")
     tray.setContextMenu(contextMenu);
     tray.on('click', () => win.show())
