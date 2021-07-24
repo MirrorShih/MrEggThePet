@@ -105,3 +105,4 @@ dist
 
 build.js
 test_build/
+.idea
