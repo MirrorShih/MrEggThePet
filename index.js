@@ -39,7 +39,7 @@ async function createTray(win) {
     tray = Tray(iconPath);
     let trayMenu = [];
 
-    const files=await fs.readdir('./imgs/')
+    const files=await fs.readdir(path.join(__dirname,'./imgs/'))
     files.forEach(file => {
         if(file !== "tray.png") {
             trayMenu.push({label: file.split('.')[0], click: switchMrEgg(file.split('.')[0])})
