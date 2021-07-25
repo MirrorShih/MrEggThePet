@@ -22,7 +22,9 @@ function createWindow() {
     mainWindow.setAlwaysOnTop(true, 'floating')
     mainWindow.setSkipTaskbar(true)
     mainWindow.setResizable(false)
-    autoUpdater.checkForUpdatesAndNotify();
+    if(process.platform!=="darwin") {
+        autoUpdater.checkForUpdatesAndNotify();
+    }
     return mainWindow;
 }
 
