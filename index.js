@@ -1,11 +1,13 @@
 const { app, BrowserWindow, Tray, Menu } = require('electron');
 const path = require('path');
 const fs=require('fs/promises');
+const {autoUpdater}=require('electron-updater');
 
 let tray = null;
+let mainWindow=null;
 
 function createWindow() {
-    const mainWindow = new BrowserWindow({
+    mainWindow = new BrowserWindow({
         width: 140,
         height: 145,
         webPreferences: {
@@ -20,6 +22,7 @@ function createWindow() {
     mainWindow.setAlwaysOnTop(true, 'floating')
     mainWindow.setSkipTaskbar(true)
     mainWindow.setResizable(false)
+    autoUpdater.checkForUpdatesAndNotify();
     return mainWindow;
 }
 
@@ -53,5 +56,10 @@ app.on('ready', () => {
     const win = createWindow();
     createTray(win);
 })
+
+
+autoUpdater.on('update-downloaded', () => {
+    autoUpdater.quitAndInstall();
+});
 
 app.on('window-all-closed', () => app.quit())
