@@ -1,6 +1,6 @@
 {
   "name": "mreggthepet",
-  "version": "4.0.4",
+  "version": "4.0.5",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -47,6 +47,7 @@
     "electron-builder": "^22.11.7"
   },
   "dependencies": {
+    "auto-launch": "^5.0.5",
     "electron-updater": "^4.3.9"
   }
 }

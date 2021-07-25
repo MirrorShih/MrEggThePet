@@ -2,6 +2,7 @@ const { app, BrowserWindow, Tray, Menu } = require('electron');
 const path = require('path');
 const fs=require('fs/promises');
 const {autoUpdater}=require('electron-updater');
+let autoLaunch=require('auto-launch')
 
 let tray = null;
 let mainWindow=null;
@@ -38,13 +39,21 @@ async function createTray(win) {
     const iconPath = path.join(__dirname, './imgs/tray.png');
     tray = Tray(iconPath);
     let trayMenu = [];
-
     const files=await fs.readdir(path.join(__dirname,'./imgs/'))
     files.forEach(file => {
         if(file !== "tray.png") {
             trayMenu.push({label: file.split('.')[0], click: switchMrEgg(file.split('.')[0])})
         }
     })
+    let mreggAutoLaunch=new autoLaunch({name:'mreggthepet'})
+    trayMenu.push({label:'Auto Launch',type:'checkbox',checked:await mreggAutoLaunch.isEnabled(),click:(menuItem)=>{
+        if(menuItem.checked){
+            mreggAutoLaunch.enable()
+        }
+        else{
+            mreggAutoLaunch.disable()
+        }
+        }})
     trayMenu.push({label: 'Hide', click: () => win.hide()});
     trayMenu.push({label: 'Exit', click: () => app.quit()});
     const contextMenu = Menu.buildFromTemplate(trayMenu);
