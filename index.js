@@ -23,7 +23,7 @@ function createWindow() {
     mainWindow.setSkipTaskbar(true)
     mainWindow.setResizable(false)
     if(process.platform!=="darwin") {
-        autoUpdater.checkForUpdatesAndNotify();
+        autoUpdater.checkForUpdates();
     }
     return mainWindow;
 }
