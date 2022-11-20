@@ -27,6 +27,12 @@ cache:
     - $HOME/.cache/electron
     - $HOME/.cache/electron-builder
 
+install:
+    - |
+    if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+    brew install yarn;
+    fi
+
 before_install:
   - |
     if [ "$TRAVIS_OS_NAME" == "osx" ]; then
