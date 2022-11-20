@@ -42,7 +42,7 @@ async function createTray(win) {
     const files=await fs.readdir(path.join(__dirname,'./imgs/'))
     files.forEach(file => {
         if(file !== "tray.png") {
-            trayMenu.push({label: file.split('.')[0], click: switchMrEgg(file.split('.')[0])})
+            trayMenu.push({label: file.substring(0,file.lastIndexOf('.')), click: switchMrEgg(file.substring(0,file.lastIndexOf('.')))})
         }
     })
     let mreggAutoLaunch=new autoLaunch({name:'mreggthepet'})
